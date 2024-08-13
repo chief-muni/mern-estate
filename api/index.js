@@ -15,7 +15,10 @@ app.use(express.json());
 app.use(cors({
   credentials: true,
   origin: 'http://192.168.5.232:5173'
-}))
+}));
+if(process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
+
+app.use('/api/v1/user', require('./routes/user.route'))
 
 app.listen(PORT, () => {
   console.log(`✅Node running on port ${PORT}`);
