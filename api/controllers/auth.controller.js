@@ -2,8 +2,9 @@ const
   bcrypt = require('bcryptjs'),
   User = require("../models/user.model")
 ;
+const errorHandler = require('../utils/error');
 
-exports.signUp = async(req, res) => {
+exports.signUp = async(req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 11);
   try{
@@ -14,7 +15,8 @@ exports.signUp = async(req, res) => {
       success: `User ${username} created successfully`
     })
   } catch(error) {
-    res.status(500).json(error)
+    // next(error);
+    next(errorHandler(550, `Error from my errorHandler`));
   }
 
 }
