@@ -12,11 +12,12 @@ exports.signUp = async(req, res, next) => {
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({
-      success: `User ${username} created successfully`
+      success: true,
+      message: `User ${username} created successfully`
     })
   } catch(error) {
     // next(error);
-    next(errorHandler(550, `Error from my errorHandler`));
+    next(errorHandler(550, `Error: ${error.message}`));
   }
 
 }

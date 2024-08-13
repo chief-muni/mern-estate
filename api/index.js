@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'http://192.168.5.232:5173'
+  origin: 'http://192.168.101.143:5173'
 }));
 if(process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 
