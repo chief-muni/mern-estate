@@ -7,8 +7,6 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 
 function App() {
-  const some = 'thing';
-  console.log(some);
   return (
     <BrowserRouter>
       <Header />

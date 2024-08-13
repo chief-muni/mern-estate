@@ -18,7 +18,8 @@ app.use(cors({
 }));
 if(process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 
-app.use('/api/v1/user', require('./routes/user.route'))
+app.use('/api/v1/user', require('./routes/user.route'));
+app.use('/api/v1/auth', require('./routes/auth.route'));
 
 app.listen(PORT, () => {
   console.log(`✅Node running on port ${PORT}`);
