@@ -16,7 +16,6 @@ function SignUp() {
     e.preventDefault();
     try{
       setIsLoading(true);
-      // setError(null);
       // const { data } = await axios.post(`/auth/sign-up`, formData);
       const res = await fetch('/api/v1/auth/sign-up', {
         method: 'POST',
@@ -26,7 +25,7 @@ function SignUp() {
         body: JSON.stringify(formData)
       });
       const data = await res.json();
-
+      console.log(data);
       if(data.success === false) {
         setError(data.message);
         setIsLoading(false);
