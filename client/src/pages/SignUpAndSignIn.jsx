@@ -1,24 +1,27 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
 
 function SignUpAndSignIn() {
   const
     [formData, setFormData] = useState({}),
-    [error, setError] = useState(null),
-    [isLoading, setIsLoading] = useState(false),
+    { loading, error } = useSelector(state => state.user),
     [formType, setFormType] = useState('sign-in'),   // or 'sign-up'
+    formLabel = formType === 'sign-up' ? `Sign Up` : 'Sign In',
+    dispatch = useDispatch(),
     navigate = useNavigate()
   ;
-  const formLabel = formType === 'sign-up' ? `Sign Up` : 'Sign In';
-  
+
   const handleChange = (e) => {
     setFormData({...formData, [e.target.id]: e.target.value});
-  }
+  };
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      setIsLoading(true);
+      dispatch(signInStart());
       // const { data } = await axios.post(`/auth/${formType}`, formData);
       const res = await fetch(`/api/v1/auth/${formType}`, {
         method: 'POST',
@@ -28,25 +31,20 @@ function SignUpAndSignIn() {
         body: JSON.stringify(formData)
       });
       const data = await res.json();
-      // console.log(data);
       if(data.success === false) {
-        setError(data.message);
-        setIsLoading(false);
+        dispatch(signInFailure(data.message));
         return
       }
-      setIsLoading(false);
+      dispatch(signInSuccess(data));
       if(formType === 'sign-up') {
         setFormType('sign-in')
       } else {
         navigate('/')
       }
-      setError(null);
     } catch(error) {
-      setIsLoading(false);
-      setError(error.message);
+      dispatch(signInFailure(error.message));
     } 
-  }
-
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -64,17 +62,15 @@ function SignUpAndSignIn() {
           type="password" id="password" className="border p-3 rounded-lg" placeholder="password" 
           onChange={handleChange}
         />
-        <button type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : formLabel}</button>
+        <button type="submit" disabled={loading}>{loading ? 'Loading...' : formLabel}</button>
       </form>
       <div className="flex gap-2 mt-5 justify-center">
         {formType === 'sign-in' && <>
           <p>Don&apos;t have an account? </p>
-          {/* <Link to="/sign-in"></Link> */}
           <Link onClick={() => setFormType('sign-up')} className="text-blue-700">Sign up now!</Link>
         </>}
         {formType === 'sign-up' && <>
           <p>Already Have an account?</p>
-          {/* <Link to="/sign-in"></Link> */}
           <Link onClick={() => setFormType('sign-in')} className="text-blue-700">Sign in</Link>
         </>}
       </div>
@@ -83,4 +79,4 @@ function SignUpAndSignIn() {
   )
 }
 
-export default SignUpAndSignIn;
+export default SignUpAndSignIn
