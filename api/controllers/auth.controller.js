@@ -12,9 +12,11 @@ const
 exports.signUp = async(req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 11);
+  const avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';  //DELETE: temporary until avatar responds in DB
+
   try{
     // const newUser = await User.create({ username, email, password });
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({ username, email, password: hashedPassword, avatar });
     await newUser.save();
     res.status(201).json({
       success: true,
@@ -56,9 +58,16 @@ exports.google = async(req, res, next) => {
         .json(rest);
     } else {      // Create new user
       // Generating a password since its required to create new user
-      const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8); // 392fuh4fj49d0kr9  => 16 chars
+      const generatedPassword = 
+        Math.random().toString(36).slice(-8) + 
+        Math.random().toString(36).slice(-8); // 392fuh4fj49d0kr9  => 16 chars
       const hashedPassword = await bcrypt.hash(generatedPassword, 11);
-      const newUser = await User.create({ username: name.toLowerCase().split(' ').join('') + Math.random().toString(36).slice(-4) , email, password: hashedPassword, avatar: photo });
+      const newUser = await User.create({ 
+        username: name.toLowerCase().split(' ').join('') + Math.random().toString(36).slice(-4) , 
+        email, 
+        password: hashedPassword, 
+        avatar: photo 
+      });
       // console.log({newUser});
       const token = jwt.sign({ id: newUser._id }, jwtSecret);
       const { password:pass, _id, ...rest } = newUser._doc;
