@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 function SignUpAndSignIn() {
   const
@@ -63,6 +64,7 @@ function SignUpAndSignIn() {
           onChange={handleChange}
         />
         <button type="submit" disabled={loading}>{loading ? 'Loading...' : formLabel}</button>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5 justify-center">
         {formType === 'sign-in' && <>

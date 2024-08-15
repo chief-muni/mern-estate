@@ -35,10 +35,37 @@ exports.singIn = async(req, res, next) => {
     // Create JWT Token
     const token = jwt.sign({ id: validUser._id }, jwtSecret);
     // Remove password & sensitive info
-    const { password: pass, _id, createdAt, updatedAt, ...rest } = validUser._doc; // to accesss Mongo Doc
+    const { password:pass, _id, createdAt, updatedAt, ...rest } = validUser._doc; // to accesss Mongo Doc
     res.status(200)
       .cookie('access_token', token, cookieOptions)
       .json(rest)
+  } catch(error) {
+    next(error)
+  }
+}
+
+exports.google = async(req, res, next) => {
+  try{
+    const { name, email, photo } = req.body;
+    const user = await User.findOne({ email });
+    if(user) {    // Generate and send token
+      const token = jwt.sign({ id: user._id }, jwtSecret);
+      const { password:pass, _id, createdAt, updatedAt, ...rest } = user._doc;
+      res.status(200)
+        .cookie('access_token', token, cookieOptions)
+        .json(rest);
+    } else {      // Create new user
+      // Generating a password since its required to create new user
+      const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8); // 392fuh4fj49d0kr9  => 16 chars
+      const hashedPassword = await bcrypt.hash(generatedPassword, 11);
+      const newUser = await User.create({ username: name.toLowerCase().split(' ').join('') + Math.random().toString(36).slice(-4) , email, password: hashedPassword, avatar: photo });
+      // console.log({newUser});
+      const token = jwt.sign({ id: newUser._id }, jwtSecret);
+      const { password:pass, _id, ...rest } = newUser._doc;
+      res.status(201)
+        .cookie('access_token', token, cookieOptions)
+        .json(rest)
+    }
   } catch(error) {
     next(error)
   }
