@@ -15,7 +15,7 @@ function Header() {
           </h1>
         </Link>
         <form className="flex items-center bg-slate-100 p-3 rounded-lg">
-          <input type="text" id="" 
+          <input type="text" id="search" 
             className="w-24 sm:w-64 bg-transparent focus:outline-none" 
             placeholder="Search..." 
           />
