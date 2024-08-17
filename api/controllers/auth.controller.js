@@ -44,6 +44,18 @@ exports.singIn = async(req, res, next) => {
   }
 }
 
+exports.signOut = (req, res, next) => {
+  try {
+    res
+      .clearCookie('access_token')
+      .status(200)
+      .json('User logged out')
+    ;
+  } catch(error) {
+    next(error)
+  }
+}
+
 exports.google = async(req, res, next) => {
   try{
     const { name, email, photo } = req.body;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../firebase";
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure } from "../redux/user/userSlice";
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
 import axios from "axios";
 
 function Profile() {
@@ -69,6 +69,8 @@ function Profile() {
   };
 
   const handleDeleteUser = async() => {
+    const confirm = window.confirm('Are you sure you want to delete your account');
+    if(!confirm) return;
     try {
       dispatch(deleteUserStart());
       const { data } = await axios.delete(`/user/delete/${currentUser._id}`);
@@ -79,6 +81,18 @@ function Profile() {
       dispatch(deleteUserSuccess());
     } catch(error) {
       dispatch(deleteUserFailure(error.message))
+    }
+  };
+
+  const handleSignOut = async() => {
+    const confirm = window.confirm('Are you sure you want to Logout');
+    if(!confirm) return;
+    try {
+      dispatch(signOutUserStart());
+      await axios.get('auth/sign-out');
+      dispatch(signOutUserSuccess());
+    } catch(error) {
+      dispatch(signOutUserFailure(error.message));
     }
   }
 
@@ -131,7 +145,7 @@ function Profile() {
       </form>
       <div className="flex justify-between mt-7 px-2">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       {error && <p className="text-red-700 font-medium text-center mt-6">{error}</p>}
       {updateSuccess && <p className="text-green-700 font-medium text-center mt-6">Profile updated successully</p>}
