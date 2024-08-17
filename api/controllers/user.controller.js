@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const errorHandler = require("../utils/error");
 const User = require('../models/user.model');
+const cookieOptions = require('../utils/cookieOptions');
 
 exports.test = async(req, res) => {
   res.status(200).json({
@@ -25,5 +26,19 @@ exports.upDateUser = async(req, res, next) => {
     res.status(201).json(rest)
   } catch(error) {
     next(error)
+  }
+};
+
+exports.deleteUser = async(req, res, next) => {
+  if(req.user.id !== req.params.userId) return next(errorHandler(401, 'Unauthorized to delete this account'));
+  try {
+    await User.findByIdAndDelete(req.params.userId);
+    res
+      .clearCookie('access_token', cookieOptions)
+      .status(204)
+      .json('User deleted successfully')
+    ;
+  } catch(error) {
+    next(error);
   }
 }

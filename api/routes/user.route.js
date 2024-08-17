@@ -1,10 +1,10 @@
 const express = require('express');
-const { test, upDateUser } = require('../controllers/user.controller');
+const { test, upDateUser, deleteUser } = require('../controllers/user.controller');
 const verifyToken = require('../utils/verifyUser');
 
 const router = express.Router();
 
-// router.get('/test', test);
-router.patch('/update/:userId', verifyToken, upDateUser)
+router.patch('/update/:userId', verifyToken, upDateUser);
+router.delete('/delete/:userId', verifyToken, deleteUser);
 
 module.exports = router;
