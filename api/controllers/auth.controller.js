@@ -12,11 +12,9 @@ const
 exports.signUp = async(req, res, next) => {
   const { username, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 11);
-  const avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';  //DELETE: temporary until avatar responds in DB
-
   try{
     // const newUser = await User.create({ username, email, password });
-    const newUser = new User({ username, email, password: hashedPassword, avatar });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({
       success: true,
@@ -37,7 +35,7 @@ exports.singIn = async(req, res, next) => {
     // Create JWT Token
     const token = jwt.sign({ id: validUser._id }, jwtSecret);
     // Remove password & sensitive info
-    const { password:pass, _id, createdAt, updatedAt, ...rest } = validUser._doc; // to accesss Mongo Doc
+    const { password:pass, createdAt, updatedAt, ...rest } = validUser._doc; // to accesss Mongo Doc
     res.status(200)
       .cookie('access_token', token, cookieOptions)
       .json(rest)

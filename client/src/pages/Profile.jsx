@@ -74,7 +74,7 @@ function Profile() {
         <input type="password" id="password" className="border p-3 rounded-lg" placeholder="password" />
         <button type="submit">Update</button>
       </form>
-      <div className="flex justify-between mt-7">
+      <div className="flex justify-between mt-7 px-2">
         <span className="text-red-700 cursor-pointer">Delete account</span>
         <span className="text-red-700 cursor-pointer">Sign out</span>
       </div>
