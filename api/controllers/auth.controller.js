@@ -50,7 +50,7 @@ exports.google = async(req, res, next) => {
     const user = await User.findOne({ email });
     if(user) {    // Generate and send token
       const token = jwt.sign({ id: user._id }, jwtSecret);
-      const { password:pass, _id, createdAt, updatedAt, ...rest } = user._doc;
+      const { password:pass, createdAt, updatedAt, ...rest } = user._doc;
       res.status(200)
         .cookie('access_token', token, cookieOptions)
         .json(rest);
@@ -68,7 +68,7 @@ exports.google = async(req, res, next) => {
       });
       // console.log({newUser});
       const token = jwt.sign({ id: newUser._id }, jwtSecret);
-      const { password:pass, _id, ...rest } = newUser._doc;
+      const { password:pass, ...rest } = newUser._doc;
       res.status(201)
         .cookie('access_token', token, cookieOptions)
         .json(rest)
