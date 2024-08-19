@@ -4,6 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const 
@@ -141,6 +142,7 @@ function Profile() {
           placeholder="password" 
         />
         <button type="submit" disabled={loading}>{loading ? 'Loading...' : 'Update'}</button>
+        <Link to="/create-listing" className="add">Create Listing</Link>
       </form>
       <div className="flex justify-between mt-7 px-2">
         <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">Delete account</span>

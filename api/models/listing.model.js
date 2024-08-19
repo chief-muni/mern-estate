@@ -4,7 +4,7 @@ const listingSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please enter a name for the Lisitng'],
-    maxlength: [50, 'Name cannot be more than 50 characters']
+    maxlength: [62, 'Name cannot be more than 50 characters']
   },
   description: {
     type: String,

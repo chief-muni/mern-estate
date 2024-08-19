@@ -14,3 +14,17 @@ button[type="submit"] {
 button.google {
   @apply bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80
 }
+
+a.add {
+  @apply bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95
+}
+
+input.form,
+input[type="number"],
+textarea {
+  @apply border border-gray-200 p-3 rounded-lg
+}
+
+input[type="checkbox"] {
+  @apply w-5
+}
