@@ -16,8 +16,7 @@ function Profile() {
     [formData, setFormData] = useState({}),
     [updateSuccess, setUpdateSuccess] = useState(false)
   ;
-  // console.log(formData);
-  // console.log(currentUser);
+  
   useEffect(() => {
     if(file) {
       handleFileUpload(file);
@@ -69,7 +68,7 @@ function Profile() {
   };
 
   const handleDeleteUser = async() => {
-    const confirm = window.confirm('Are you sure you want to delete your account');
+    const confirm = window.confirm('Are you sure you want to delete your account?');
     if(!confirm) return;
     try {
       dispatch(deleteUserStart());

@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs');
 const errorHandler = require("../utils/error");
 const User = require('../models/user.model');
-const cookieOptions = require('../utils/cookieOptions');
 
 exports.test = async(req, res) => {
   res.status(200).json({

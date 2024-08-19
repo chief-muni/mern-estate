@@ -9,7 +9,8 @@ export default defineConfig({
     // Proxy is for fetch default baseURL, delete when using axios
     proxy: {
       '/api': {
-        target: 'http://192.168.101.143:5000',
+        target: 'http://192.168.101.143:5000',  // Office network
+        // target: 'http://192.168.94.232:5000',  // mobile network
         secure: false
       }
     }
