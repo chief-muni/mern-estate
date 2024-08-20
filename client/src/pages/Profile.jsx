@@ -5,6 +5,7 @@ import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { HiPencil, HiPencilSquare, HiTrash } from "react-icons/hi2";
 
 function Profile() {
   const 
@@ -12,9 +13,12 @@ function Profile() {
     dispatch = useDispatch(),
     fileRef = useRef(null),
     [file, setFile] = useState(undefined),
+    [formData, setFormData] = useState({}),
     [uploadProgress, setUploadProgress] = useState(0),
     [uploadError, setUploadError] = useState(false),
-    [formData, setFormData] = useState({}),
+    [listings, setListings] = useState([]),
+    [listingsError, setListingsError] = useState(false),
+    [listingsLoading, setListingsLoading] = useState(false),
     [updateSuccess, setUpdateSuccess] = useState(false)
   ;
   
@@ -56,7 +60,6 @@ function Profile() {
       if(data.success === false) {
         dispatch(updateUserFailure(data.message));   // here data represents error
       }
-      // console.log(data);
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch(error) {
@@ -94,6 +97,23 @@ function Profile() {
       dispatch(signOutUserSuccess());
     } catch(error) {
       dispatch(signOutUserFailure(error.message));
+    }
+  }
+
+  const handleShowListings = async() => {
+    try {
+      setListingsLoading(true);
+      setListingsError(false);
+      const { data } = await axios.get(`/user/listings/${currentUser._id}`);
+      setListingsLoading(false);
+      if(!data) {
+        return setListingsError(true);
+      }
+      console.log(data);
+      setListings(data);
+    } catch(error) {
+      setListingsError(true);
+      setListingsLoading(false);
     }
   }
 
@@ -151,7 +171,32 @@ function Profile() {
       </div>
       {error && <p className="text-red-700 font-medium text-center mt-6">{error}</p>}
       {updateSuccess && <p className="text-green-700 font-medium text-center mt-6">Profile updated successully</p>}
-      
+      <button type="button" onClick={handleShowListings} disabled={listingsLoading} className="text-green-700 w-full my-6">Show listings</button>
+      {listingsError && <p className="text-red-700 font-medium text-center mt-6">Error showing listings</p>}
+      <div className="flex flex-col gap-4">
+        <h2 className="text-2xl font-semibold text-center mt-7">My Listings</h2>
+        {listings?.length > 0 && listings.map(listing => (
+          <div key={listing._id} className="flex gap-3 justify-between items-center p-3 border rounded-lg hover:shadow-md">
+            <Link to={`/listing/${listing._id}`}>
+              <img 
+                src={listing.imageUrls[0]} alt="listing cover" 
+                className="w-16 h-16 object-contain" 
+              />
+            </Link>
+            <Link to={`/listing/${listing._id}`} className="flex-1 text-slate-700 truncate hover:underline hover:underline-offset-4">
+              <p>{listing.title}</p>
+            </Link>
+            <div className="flex gap-3 ml-2">
+              <button type="button"
+                className="p-2 text-red-700 border border-red-700 rounded-md hover:text-white hover:bg-red-700"
+              ><HiTrash /></button>
+              <button type="button" 
+                className="p-2 text-slate-700 border border-slate-700 rounded-md hover:text-white hover:bg-slate-700"
+              ><HiPencil /></button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

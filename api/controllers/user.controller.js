@@ -49,10 +49,7 @@ exports.getUserListings = async(req, res, next) => {
       const listings = await Listing.find({ userRef: req.user.id });
       if(!listings) return next(errorHandler(404, 'You dont have any lisitings yet'));
       res.status(200)
-        .json({
-          results: listings.length,
-          data: listings
-        });
+        .json(listings);
     } catch (error) {
       next(error)
     }
