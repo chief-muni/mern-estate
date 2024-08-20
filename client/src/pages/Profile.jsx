@@ -32,6 +32,7 @@ function Profile() {
       uploadTask = uploadBytesResumable(storageRef, file)
     ;
     uploadTask.on('state_changed', (snapshot) => {
+      // for tracking file upload progress
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setUploadProgress(progress);
     }, (error) => { // callback on error
