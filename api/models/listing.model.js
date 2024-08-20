@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const listingSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: [true, 'Please enter a name for the Lisitng'],
     maxlength: [62, 'Name cannot be more than 50 characters']
