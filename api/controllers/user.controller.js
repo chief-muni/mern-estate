@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const errorHandler = require("../utils/error");
 const User = require('../models/user.model');
+const Listing = require('../models/listing.model');
 
 exports.test = async(req, res) => {
   res.status(200).json({
@@ -39,5 +40,23 @@ exports.deleteUser = async(req, res, next) => {
     ;
   } catch(error) {
     next(error);
+  }
+};
+
+exports.getUserListings = async(req, res, next) => {
+  if(req.user.id === req.params.userId) {
+    try {
+      const listings = await Listing.find({ userRef: req.user.id });
+      if(!listings) return next(errorHandler(404, 'You dont have any lisitings yet'));
+      res.status(200)
+        .json({
+          results: listings.length,
+          data: listings
+        });
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    return next(errorHandler(401, 'You can only view your own listings!'));
   }
 }
