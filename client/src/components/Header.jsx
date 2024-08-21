@@ -6,12 +6,12 @@ function Header() {
   const { currentUser } = useSelector(state => state.user);
 
   return (
-    <header className="bg-slate-200  border-b border-gray-300" >
+    <header className="bg-slate-200  border-b border-gray-300  w-full" >
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
-          <h1 className="flex flex-wrap items-end font-bold text-sm sm:text-xl">
-            <HiHomeModern className="text-slate-400 text-xl sm:text-3xl" />&nbsp;
-            <span className="text-slate-700">RD Estates</span>
+          <h1 className="flex flex-wrap items-end font-bold sm:text-xl">
+            <HiHomeModern className="text-slate-400 text-3xl" />&nbsp;
+            <span className="text-slate-700">RD <span className="hidden sm:inline-block">Estates</span> </span>
           </h1>
         </Link>
         <form className="flex items-center bg-slate-100 p-3 rounded-lg">

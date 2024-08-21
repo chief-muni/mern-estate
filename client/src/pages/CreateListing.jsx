@@ -234,7 +234,7 @@ function CreateListing() {
             <button type="button" 
               onClick={handleImageUpload}
               disabled={isUploading}
-              className="add p-3 bg-transparent border border-green-700 text-green-700 uppercase hover:text-white hover:bg-green-700 rounded-lg transition-all duration-300"
+              className="add-alt"
             >{isUploading ? 'Uploading...': 'Upload'}</button>
           </div>
           {imageUploadError && <p className="text-red-700 text-sm">{imageUploadError}</p>}
