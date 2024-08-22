@@ -4,13 +4,14 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiChevronDoubleDown, HiChevronDoubleUp, HiPencil, HiTrash } from "react-icons/hi2";
 
 function Profile() {
   const 
     { currentUser, loading, error } = useSelector(state => state.user),
     dispatch = useDispatch(),
+    navigate = useNavigate(),
     fileRef = useRef(null),
     [file, setFile] = useState(undefined),
     [formData, setFormData] = useState({}),
@@ -206,7 +207,8 @@ function Profile() {
                 onClick={() => handleListingDelete(listing._id)}
                 className="p-2 text-red-700 border border-red-700 rounded-md hover:text-white hover:bg-red-700"
               ><HiTrash /></button>
-              <button type="button" 
+              <button type="button"
+                onClick={() => navigate(`/update-listing/${listing._id}`)}
                 className="p-2 text-slate-700 border border-slate-700 rounded-md hover:text-white hover:bg-slate-700"
               ><HiPencil /></button>
             </div>

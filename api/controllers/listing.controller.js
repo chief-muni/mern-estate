@@ -9,6 +9,16 @@ exports.createListing = async(req, res, next) => {
   } catch(error) {
     next(error);
   }
+};
+
+exports.getListing = async(req, res, next) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if(!listing) return next(errorHandler(404), 'Sorry Listing not found');
+    res.status(200).json(listing);
+  } catch (error) {
+    next(error);
+  }
 }
 
 exports.deleteListing = async(req, res, next) => {

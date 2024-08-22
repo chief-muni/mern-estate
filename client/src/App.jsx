@@ -10,6 +10,7 @@ import Header from './components/Header';
 import { PersistGate } from 'redux-persist/integration/react';
 import PrivateRoute from './components/PrivateRoute';
 import CreateListing from './pages/CreateListing';
+import UpdateListing from './pages/UpdateListing';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.withCredentials = true;
@@ -27,6 +28,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/create-listing" element={<CreateListing />} />
+              <Route path="/update-listing/:id" element={<UpdateListing />} />
             </Route>
           </Routes>
         </BrowserRouter>
