@@ -9,6 +9,19 @@ exports.test = async(req, res) => {
   });
 };
 
+exports.getUser = async(req, res, next) => {
+  if(!req.params.id) return next(errorHandler(401, 'Please provide user id'));
+  try {
+    const user = await User.findById(req.params.id);
+    if(!user) return next(errorHandler(404, 'User not found'));
+    // clearing sensitive data
+    const { password:pass, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch(error) {
+    next(error);
+  }
+}
+
 exports.upDateUser = async(req, res, next) => {
   if(req.user.id !== req.params.userId) return next(errorHandler(401, 'Unauthorized to update this account'));
   try {

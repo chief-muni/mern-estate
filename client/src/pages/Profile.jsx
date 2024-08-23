@@ -58,7 +58,6 @@ function Profile() {
       dispatch(updateUserStart());
       setUpdateSuccess(false);
       const { data } = await axios.patch(`/user/update/${currentUser._id}`, formData);
-      // if(!data) throw new Error(`User update failed`);
       if(data.success === false) {
         dispatch(updateUserFailure(data.message));   // here data represents error
       }

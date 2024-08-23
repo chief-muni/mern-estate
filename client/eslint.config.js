@@ -35,7 +35,7 @@ export default [
         { allowConstantExport: true },
       ],
       "no-unused-vars": ["warn", {
-      // "vars": false,
+      "vars": false,
       // "args": "after-used",
       // "caughtErrors": "all",
       // "ignoreRestSiblings": false,
