@@ -44,3 +44,46 @@ exports.updateListing = async(req, res, next) => {
     next(error)
   }
 }
+
+// For search functionality
+exports.getListings = async(req, res, next) => {
+  try {
+    const
+      searchTerm = req.query.searchTerm || '',
+      sort = req.query.sort || 'createdAt',
+      order = req.query.order || 'desc',
+      limit = parseInt(req.query.limit || 10),
+      startIndex = parseInt(req.query.startIndex || 0)
+    ;
+    let 
+      isOffer = req.query.isOffer,
+      isFurnished = req.query.isFurnished,
+      hasParking = req.query.hasParking,
+      type = req.query.type
+    ;
+    // For booleans & options
+    if(isOffer === undefined || isOffer === false) {
+      isOffer = { $in: [false, true] };
+    }
+    if(isFurnished === undefined || isFurnished === false) isFurnished = { $in: [true, false] };
+    if(hasParking === undefined || hasParking === false) hasParking = { $in: [true, false] };
+    if(type === undefined || type === 'all') type = { $in: ['rent', 'sale'] };
+
+    const listings = await Listing.find({
+      title: { $regex: searchTerm, $options: 'i' },
+      isOffer,
+      isFurnished,
+      hasParking,
+      type
+    })
+      .sort({[sort]: order})
+      .limit(limit)
+      .skip(startIndex);
+
+    return res.status(200).json(listings);
+
+
+  } catch(error) {
+    next(error);
+  }
+}
