@@ -36,6 +36,18 @@ textarea {
   @apply border border-gray-200 p-3 rounded-lg
 }
 
+input.search {
+  @apply border border-gray-300 p-3 rounded-lg w-full
+}
+
+select {
+  @apply border border-gray-300 p-3 rounded-lg 
+}
+
 input[type="checkbox"] {
   @apply w-5
+}
+
+form label {
+  @apply font-semibold
 }

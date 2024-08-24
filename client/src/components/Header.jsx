@@ -17,6 +17,7 @@ function Header() {
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`)
   };
+  // To update searchbox
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get('searchTerm');
