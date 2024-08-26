@@ -64,7 +64,7 @@ function Listing() {
         >
           {listing.imageUrls.map(url => (<div key={url}>
             {/* <div className="h-[60vh] max-h-dvh bg-cover" style={{ background: `url(${url}) center no-repeat` }} key={url}></div> */}
-            <img src={url} className="h-[60vh] max-h-dvh object-cover" alt="listing slide"/>
+            <img src={url} className="h-[600px] object-cover" alt="listing slide"/>
             </div>
           ))}
         </Carousel>

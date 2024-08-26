@@ -2,18 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
+import { HiChevronDoubleDown } from "react-icons/hi2";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function Search() {
   const 
     [loading, setLoading] = useState(false),
+    [loadingMore, setLoadingMore] = useState(false),
     [error, setError] = useState(false),
     [listings, setListings] = useState([]),
-    navigate = useNavigate()
+    [showMore, setShowMore] = useState(false),
+    navigate = useNavigate(),
+    pageCount = 9
   ;
   const [sidebarData, setSidebarData] = useState({
     searchTerm: '',
     type: 'all',
-    sort: 'created_at',
+    sort: 'createdAt',
     order: 'desc',
     hasParking: false,
     isFurnished: false,
@@ -43,7 +48,7 @@ function Search() {
       setSidebarData({
         searchTerm: searchTermFromUrl || '',
         type: typeFromUrl || 'all',
-        sort: sortFromUrl || 'created_at',
+        sort: sortFromUrl || 'createdAt',
         order: orderFromUrl || 'desc',
         hasParking: hasParkingFromUrl === 'true' ? true : false,
         isFurnished: isFurnishedFromUrl === 'true' ? true : false,
@@ -53,14 +58,20 @@ function Search() {
 
     const fetchListings = async() => {
       try {
-        setError(false);
         setLoading(true);
+        setError(false);
+        setShowMore(false);
         const searchQuery = urlParams.toString();
         const { data } = await axios.get(`/listing?${searchQuery}`);
         if(!data || data.length < 1) {
           setLoading(false);
           setListings([]);
           return setError(true); 
+        }
+        if(data.length > pageCount - 1) {
+          setShowMore(true);
+        } else {
+          setShowMore(false);
         }
         setListings(data)
         console.log(data);
@@ -72,7 +83,6 @@ function Search() {
       }
     }
     fetchListings();
-
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -107,7 +117,21 @@ function Search() {
     urlParams.set('isFurnished', sidebarData.isFurnished);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  }
 
+  const onShowMoreClick = async() => {
+    setLoadingMore(true);
+    setShowMore(false);
+    const startIndex = listings.length;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('startIndex', startIndex);
+    const searchQuery = urlParams.toString();
+    const { data } = await axios.get(`/listing?${searchQuery}`);
+    setLoadingMore(false);
+    if(data.length < pageCount) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
   }
  
   return (
@@ -193,6 +217,17 @@ function Search() {
           {loading && <div className="w-full h-full flex justify-center items-center"><div className="loader"></div></div> }
           {error && <p className="text-xl text-red-700 my-7">⛔️ Sorry no listings found, please adjust your search filter</p>}
           {!loading && listings.length > 0 && listings.map(listing => <ListingCard listing={listing} key={listing._id} />)}
+          {showMore && (
+            <button type="button"
+              onClick={onShowMoreClick}
+              className="text-green-700 hover:underline p-7 text-center w-full flex items-center justify-center"
+            >Show more&nbsp;<HiChevronDoubleDown /></button>
+          )}
+          {loadingMore && (
+            <div className="flex w-full text-2xl text-green-700 p-7 justify-center">
+              <AiOutlineLoading3Quarters className="animate-spin" />
+            </div>
+          )}
         </div>
       </div>
     </div>
