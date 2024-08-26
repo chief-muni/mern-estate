@@ -62,10 +62,10 @@ function Listing() {
           interval={5000}
           animationHandler="fade"
         >
-          {listing.imageUrls.map(url => (<>
+          {listing.imageUrls.map(url => (<div key={url}>
             {/* <div className="h-[60vh] max-h-dvh bg-cover" style={{ background: `url(${url}) center no-repeat` }} key={url}></div> */}
-            <img src={url} className="h-[60vh] max-h-dvh object-cover" alt="listing slide" key={url} />
-            </>
+            <img src={url} className="h-[60vh] max-h-dvh object-cover" alt="listing slide"/>
+            </div>
           ))}
         </Carousel>
         <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
@@ -140,16 +140,6 @@ function Listing() {
               >Contact Landlord</button>
             )}
             {contact && <ContactLandlord listing={listing} setContact={setContact} />}
-
-            {/* {currentUser && listing.userRef !== currentUser._id && !contact && (
-              <button
-                onClick={() => setContact(true)}
-                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
-              >
-                Contact landlord
-              </button>
-            )} */}
-            {/* {contact && <Contact listing={listing} />} */}
           </div>
 
       </div>

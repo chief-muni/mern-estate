@@ -3,7 +3,7 @@ import { MdLocationOn } from 'react-icons/md';
 import { capitalize, pluralize } from "../utils/helper";
 
 function ListingCard({ listing }) {
-  const defaultImg = 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.utgR3Nv5L4LpwAVTcZKl5QHaEE%26pid%3DApi&f=1&ipt=bd2031dce2645edcb80314e32ef314c68f0e00ef646dde595639f5bb30eb95ad&ipo=images';
+  const defaultImg = import.meta.env.VITE_DEFAULT_HOUSE_IMAGE;
 
   return (
     <div className="bg-white shadow-md hover:shadow-xl transition-shadow duration-200 overflow-hidden rounded-2xl w-full sm:w-[320px] border-t-2 border-white">

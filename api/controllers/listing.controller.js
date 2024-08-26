@@ -52,7 +52,7 @@ exports.getListings = async(req, res, next) => {
       searchTerm = req.query.searchTerm || '',
       sort = req.query.sort || 'createdAt',
       order = req.query.order || 'desc',
-      limit = parseInt(req.query.limit || 10),
+      limit = parseInt(req.query.limit || 9),
       startIndex = parseInt(req.query.startIndex || 0)
     ;
     let 
