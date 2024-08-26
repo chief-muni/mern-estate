@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import ListingCard from "../components/ListingCard";
 
 function Search() {
   const 
@@ -52,15 +53,22 @@ function Search() {
 
     const fetchListings = async() => {
       try {
+        setError(false);
         setLoading(true);
         const searchQuery = urlParams.toString();
         const { data } = await axios.get(`/listing?${searchQuery}`);
-        // if(!data) return; 
+        if(!data || data.length < 1) {
+          setLoading(false);
+          setListings([]);
+          return setError(true); 
+        }
         setListings(data)
         console.log(data);
         setLoading(false)
       } catch (error) {
         console.log(error);
+        setError(true);
+        setLoading(false);
       }
     }
     fetchListings();
@@ -179,8 +187,13 @@ function Search() {
           <button type="submit" className="mb-7">Search</button>
         </form>
       </div>
-      <div className="p-4 sm:p-7">
-        <h1 className="text-3xl font-semibold border-b pb-3 mt-5 sm:mt-0 text-slate-700">Listing results</h1>
+      <div className="p-4 sm:p-7 relative flex-1 ">
+        <h1 className="text-3xl font-semibold border-b pb-3 my-5 sm:mt-0 text-slate-700">Listing results</h1>
+        <div className="flex gap-4 flex-wrap">
+          {loading && <div className="w-full h-full flex justify-center items-center"><div className="loader"></div></div> }
+          {error && <p className="text-xl text-red-700 my-7">⛔️ Sorry no listings found, please adjust your search filter</p>}
+          {!loading && listings.length > 0 && listings.map(listing => <ListingCard listing={listing} key={listing._id} />)}
+        </div>
       </div>
     </div>
   )

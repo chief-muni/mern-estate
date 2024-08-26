@@ -1,13 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-// import { Swiper, SwiperSlide } from "swiper";
-// import SwiperCore from 'swiper';
-import Swiper from "swiper";
-import { Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { useSelector } from "react-redux";
+import ContactLandlord from "../components/ContactLandlord";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   FaBath,
   FaBed,
@@ -16,7 +13,6 @@ import {
   FaParking,
   FaShare,
 } from 'react-icons/fa';
-import ContactLandlord from "../components/ContactLandlord";
 
 function Listing() {
   const
@@ -28,12 +24,6 @@ function Listing() {
     [contact, setContact] = useState(false),
     { currentUser } = useSelector(state => state.user)
   ;
-  const swiper = new Swiper('.swiper', {
-    modules: [Navigation],
-    direction: 'horizontal',
-    loop: true,
-  });
-  // SwiperCore.use([Navigation]);
 
   const loadListing = () => {
     setError(false);
@@ -49,7 +39,6 @@ function Listing() {
   useEffect(() => {
     loadListing();
   }, [listingId]);
-  // console.log(listing);
 
   return (
     <main>
@@ -61,16 +50,24 @@ function Listing() {
       )}
 
       {listing && !isLoading && !error && (<div>
-        <div className="swiper w-full h-[300px]">
-          <div className="swiper-wrapper">
-            {listing.imageUrls.map(url => (
-              <div className="swiper-slide bg-cover" style={{ background: `url(${url}) center no-repeat` }} key={url}>
-              </div>
-            ))}
-          </div>
-          {/* <div className="swiper-button-next"></div> */}
-          {/* <div className="swiper-button-prev"></div> */}
-        </div>
+        <Carousel
+          showThumbs={false}
+          showIndicators={true}
+          showStatus={false}
+          autoPlay={true}
+          infiniteLoop={true}
+          showArrows={false}
+          useKeyboardArrows={true}
+          swipeable={false}
+          interval={5000}
+          animationHandler="fade"
+        >
+          {listing.imageUrls.map(url => (<>
+            {/* <div className="h-[60vh] max-h-dvh bg-cover" style={{ background: `url(${url}) center no-repeat` }} key={url}></div> */}
+            <img src={url} className="h-[60vh] max-h-dvh object-cover" alt="listing slide" key={url} />
+            </>
+          ))}
+        </Carousel>
         <div className='fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer'>
           <FaShare
             className='text-slate-500'
@@ -106,7 +103,7 @@ function Listing() {
               </p>
               {listing.isOffer && (
                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                  ${(+listing.regularPrice - +listing.discountPrice).toLocaleString('en-US')} OFF
+                  ${(+listing.regularPrice - +listing.discountPrice).toLocaleString('en-US')} (Off)
                 </p>
               )}
             </div>
