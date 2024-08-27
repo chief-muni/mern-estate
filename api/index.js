@@ -9,14 +9,15 @@ const
   app = express(),
   connectDb = require('./utils/db'),
   PORT = 5000,
-  baseDir = path.resolve();
+  baseDir = path.resolve(),
+  isDevMode = process.env.NODE_ENV === 'development'
 ;
 connectDb();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: process.env.NODE_ENV === 'development' ? 'http://192.168.101.143:5173' : 'https://mern-estate-ogdk.onrender.com/'
+  origin: isDevMode ? 'http://192.168.101.143:5173' : 'https://mern-estate-ogdk.onrender.com/'
 }));
 if(process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 

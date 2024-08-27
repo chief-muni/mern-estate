@@ -9,7 +9,7 @@ export default defineConfig({
     // Proxy is for fetch default baseURL, delete when using axios
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://localhost:5000',
         secure: false
       }
     }
