@@ -14,7 +14,10 @@ import UpdateListing from './pages/UpdateListing';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+const isDevMode = import.meta.env.VITE_NODE_ENV === 'development';
+// console.log(isDevMode);
+
+axios.defaults.baseURL = isDevMode ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api/v1';
 axios.defaults.withCredentials = true;
 
 function App() {
