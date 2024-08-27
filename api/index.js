@@ -8,7 +8,7 @@ const
 const
   app = express(),
   connectDb = require('./utils/db'),
-  PORT = process.env.PORT || 5000,
+  PORT = 5000,
   baseDir = path.resolve();
 ;
 connectDb();
