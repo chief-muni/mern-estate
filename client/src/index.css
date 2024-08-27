@@ -35,7 +35,7 @@ button.google {
 }
 
 .container {
-  @apply max-w-7xl mx-auto
+  @apply max-w-6xl mx-auto
 }
 
 input.form,
