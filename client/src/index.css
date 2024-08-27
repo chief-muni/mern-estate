@@ -30,6 +30,14 @@ button.google {
   @apply flex gap-6 items-center justify-center p-3 bg-transparent border border-slate-700 text-slate-700 uppercase hover:text-white hover:bg-slate-700 rounded-lg transition-all duration-300 disabled:opacity-80
 }
 
+.link-text {
+  @apply text-xs sm:text-sm text-blue-700 font-bold hover:underline underline-offset-4
+}
+
+.container {
+  @apply max-w-7xl mx-auto
+}
+
 input.form,
 input[type="number"],
 textarea {

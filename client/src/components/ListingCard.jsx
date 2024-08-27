@@ -6,7 +6,7 @@ function ListingCard({ listing }) {
   const defaultImg = import.meta.env.VITE_DEFAULT_HOUSE_IMAGE;
 
   return (
-    <div className="bg-white shadow-md hover:shadow-xl transition-shadow duration-200 overflow-hidden rounded-2xl w-full sm:w-[320px] border-t-2 border-white">
+    <div className="bg-white shadow-md hover:shadow-xl transition-shadow duration-200 overflow-hidden rounded-2xl w-full sm:w-[300px] border-t-2 border-white">
       <Link to={`/listing/${listing._id}`} className="" >
         <img src={listing.imageUrls[0] || defaultImg} alt="listing cover" className="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300" />
         <div className="p-3 flex flex-col gap-2">

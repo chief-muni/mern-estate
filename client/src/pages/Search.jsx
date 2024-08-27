@@ -24,7 +24,7 @@ function Search() {
     isFurnished: false,
     isOffer: false
   });
-  // console.log(sidebarData);
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const 
@@ -73,8 +73,7 @@ function Search() {
         } else {
           setShowMore(false);
         }
-        setListings(data)
-        console.log(data);
+        setListings(data);
         setLoading(false)
       } catch (error) {
         console.log(error);
@@ -97,7 +96,7 @@ function Search() {
     }
     if(e.target.id === 'sort_order') {
       const
-        sort = e.target.value.split('_')[0] || 'created_at',
+        sort = e.target.value.split('_')[0] || 'createdAt',
         order = e.target.value.split('_')[1] || 'desc'
       ;
       setSidebarData({ ...sidebarData, sort, order })

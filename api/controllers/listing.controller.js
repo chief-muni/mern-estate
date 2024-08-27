@@ -62,11 +62,11 @@ exports.getListings = async(req, res, next) => {
       type = req.query.type
     ;
     // For booleans & options
-    if(isOffer === undefined || isOffer === false) {
+    if(isOffer === undefined || isOffer === 'false') {
       isOffer = { $in: [false, true] };
     }
-    if(isFurnished === undefined || isFurnished === false) isFurnished = { $in: [true, false] };
-    if(hasParking === undefined || hasParking === false) hasParking = { $in: [true, false] };
+    if(isFurnished === undefined || isFurnished === 'false') isFurnished = { $in: [true, false] };
+    if(hasParking === undefined || hasParking === 'false') hasParking = { $in: [true, false] };
     if(type === undefined || type === 'all') type = { $in: ['rent', 'sale'] };
 
     const listings = await Listing.find({
