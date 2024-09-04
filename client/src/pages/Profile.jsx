@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
-import { app } from "../firebase";
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { HiChevronDoubleDown, HiChevronDoubleUp, HiPencil, HiTrash } from "react-icons/hi2";
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserSuccess, deleteUserFailure, signOutUserStart, signOutUserSuccess, signOutUserFailure } from "../redux/user/userSlice";
+import { app } from "../firebase";
 
 function Profile() {
-  const 
+  const
     { currentUser, loading, error } = useSelector(state => state.user),
     dispatch = useDispatch(),
     navigate = useNavigate(),
@@ -140,7 +140,7 @@ function Profile() {
           onClick={() => fileRef.current.click()} 
           src={formData.avatar || currentUser.avatar}
           alt={`${currentUser.username} photo`} 
-          className="w-24 h-24 self-center mt-2 rounded-full object-cover cursor-pointer border border-gray-400 hover:border-dashed"
+          className="w-24 h-24 self-center mt-2 rounded-full object-cover cursor-pointer border-2 border-gray-400 hover:border-dashed"
         />
         <div className="flex justify-center gap-1">
           <p className="text-green-700 font-medium">

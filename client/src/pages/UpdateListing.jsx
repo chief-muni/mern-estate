@@ -79,7 +79,6 @@ function UpdateListing() {
   }
 
   const handleChange = (e) => {
-    // console.log({target: e.target.type});
     if(e.target.id === 'rent' || e.target.id === 'sale') {
       return setFormData({ ...formData, type: e.target.id });
     }

@@ -31,7 +31,7 @@ exports.singIn = async(req, res, next) => {
     const validUser = await User.findOne({ email });
     if(!validUser) return next(errorHandler(404, 'User not found'));
     const confirmedUser = await bcrypt.compare(password, validUser.password);
-    if(!confirmedUser) return next(errorHandler(401, 'Wrong credentials')); // change to User not found in production
+    if(!confirmedUser) return next(errorHandler(401, 'User not found.')); // change to User not found in production
     // Create JWT Token
     const token = jwt.sign({ id: validUser._id }, jwtSecret);
     // Remove password & sensitive info

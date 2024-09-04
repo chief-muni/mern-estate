@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.patch('/update/:userId', verifyToken, upDateUser);
 router.delete('/delete/:userId', verifyToken, deleteUser);
-router.get('/listings/:userId', verifyToken, getUserListings);
 router.get('/:id', verifyToken, getUser);
+router.get('/listings/:userId', verifyToken, getUserListings);
 
 module.exports = router;

@@ -34,7 +34,6 @@ exports.upDateUser = async(req, res, next) => {
       password: req.body.password,
       avatar: req.body.avatar,
     } }, { new: true, runValidators: true });
-
     const { password, ...rest } = updatedUser._doc;
     res.status(201).json(rest)
   } catch(error) {

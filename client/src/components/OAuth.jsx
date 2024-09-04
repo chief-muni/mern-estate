@@ -18,14 +18,6 @@ function OAuth() {
       const result = await signInWithPopup(auth, provider);
       // console.log(result);
       const { displayName, email, photoURL } = result.user;
-      /* const res = await fetch('/api/v1/auth/google', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name: displayName, email, photo: photoURL })
-      })
-      const data = await res.json(); */
       const { data } = await axios.post('/auth/google', { name: displayName, email, photo: photoURL });
       dispatch(signInSuccess(data));
       navigate('/');

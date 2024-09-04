@@ -28,7 +28,6 @@ function CreateListing() {
       // userRef: "66bfcfa4d5fc22fba8cd66e0"
     })
   ;
-  // console.log(formData);
 
   const handleImageUpload = () => {
     if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -63,7 +62,7 @@ function CreateListing() {
       ;
       uploadTask.on('state_changed', null, (error) => { // null to replace snapshot
         reject(error);
-      }, () => {
+      }, () => {    // callback on success
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           resolve(downloadURL);
         })
@@ -104,7 +103,6 @@ function CreateListing() {
       if(!data) {
         return setError('Listing could not be created');
       }
-      // console.log(data);
       navigate(`/listing/${data._id}`);
     } catch(error) {
       setError(error.message);

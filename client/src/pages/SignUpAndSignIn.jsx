@@ -24,14 +24,6 @@ function SignUpAndSignIn() {
     try{
       dispatch(signInStart());
       const { data } = await axios.post(`/auth/${formType}`, formData);
-      /* const res = await fetch(`/api/v1/auth/${formType}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-        const data = await res.json();
-      }); */
       if(data.success === false || !data) {
         dispatch(signInFailure(data.message));
         return

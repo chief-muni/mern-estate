@@ -24,6 +24,7 @@ if(process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 app.use('/api/v1/user', require('./routes/user.route'));
 app.use('/api/v1/auth', require('./routes/auth.route'));
 app.use('/api/v1/listing', require('./routes/listing.route'));
+
 // Linking backend to frontend
 app.use(express.static(path.join(baseDir, '/client/dist')));
 app.get('*', (req, res) => {
