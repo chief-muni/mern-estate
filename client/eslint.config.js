@@ -41,7 +41,7 @@ export default [
       // "caughtErrors": "all",
       // "ignoreRestSiblings": false,
       // "reportUsedIgnorePattern": false
-    }],
+      }],
     },
   },
 ]
